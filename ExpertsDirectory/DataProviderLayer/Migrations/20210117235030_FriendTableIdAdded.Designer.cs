@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataProviderLayer.Migrations
 {
     [DbContext(typeof(ExpertDbContext))]
-    [Migration("20210117194611_InitialMigration202010117")]
-    partial class InitialMigration202010117
+    [Migration("20210117235030_FriendTableIdAdded")]
+    partial class FriendTableIdAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,11 +20,29 @@ namespace DataProviderLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
+            modelBuilder.Entity("DataProviderLayer.Entities.Friend", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("FriendId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FriendId");
+
+                    b.Property<string>("MemberId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MemberId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Friends");
+                });
+
             modelBuilder.Entity("DataProviderLayer.Entities.Heading", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
                     b.Property<string>("Content")
@@ -36,22 +54,23 @@ namespace DataProviderLayer.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("HeadingType");
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int")
+                    b.Property<string>("MemberId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("MemberId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
 
                     b.ToTable("Headings");
                 });
 
             modelBuilder.Entity("DataProviderLayer.Entities.Member", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id")
-                        .UseIdentityColumn();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -61,6 +80,11 @@ namespace DataProviderLayer.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Password");
+
+                    b.Property<string>("ShortUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ShortUrl");
 
                     b.Property<string>("WebsiteUrl")
                         .IsRequired()
@@ -76,7 +100,7 @@ namespace DataProviderLayer.Migrations
                 {
                     b.HasOne("DataProviderLayer.Entities.Member", null)
                         .WithMany("Headings")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

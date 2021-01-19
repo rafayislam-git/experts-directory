@@ -10,9 +10,8 @@ namespace DataProviderLayer.Entities
     {
         [Column("Id")]
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Column("HeadingType")]
         [Required]
@@ -23,6 +22,6 @@ namespace DataProviderLayer.Entities
 
         [Column("MemberId")]
         [Required]
-        public int MemberId { get; set; }
+        public string MemberId { get; set; }
     }
 }

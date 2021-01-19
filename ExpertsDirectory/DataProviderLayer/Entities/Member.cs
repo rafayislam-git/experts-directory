@@ -10,9 +10,8 @@ namespace DataProviderLayer.Entities
     {
         [Column("Id")]
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Column("Name")]
         [Required]
@@ -24,8 +23,11 @@ namespace DataProviderLayer.Entities
         [Column("WebsiteUrl")]
         [Required]
         public string WebsiteUrl { get; set; }
+        
+        [Column("ShortUrl")]
+        [Required]
+        public string ShortUrl { get; set; }
 
-        [ForeignKey("Id")]
         public virtual List<Heading> Headings { get; set; }
     }
 }

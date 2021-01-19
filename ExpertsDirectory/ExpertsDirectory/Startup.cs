@@ -1,4 +1,6 @@
+using DataProviderLayer.DataProviders;
 using DataProviderLayer.Entities;
+using ManagerLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,9 @@ namespace ExpertsDirectory
         {
             services.AddControllers();
             services.AddDbContext<ExpertDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("ExpertsDb")));
+            services.AddScoped<MemberManager>();
+            services.AddScoped<MemberDataProvider>();
+            services.AddScoped<Helpers.WebScrappingHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

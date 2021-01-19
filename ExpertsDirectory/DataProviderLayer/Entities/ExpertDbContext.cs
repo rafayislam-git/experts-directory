@@ -14,6 +14,7 @@ namespace DataProviderLayer.Entities
 
         public DbSet<Member> Members { get; set; }
         public DbSet<Heading> Headings { get; set; }
+        public DbSet<Friend> Friends { get; set; }
     }
     
     
